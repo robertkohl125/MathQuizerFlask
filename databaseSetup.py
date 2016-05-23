@@ -12,7 +12,8 @@ class User(Base):
     """
     __tablename__ = 'user'
 
-    name =      Column(String(20))
+    user_id =    Column(Integer, primary_key = True)
+    name =      Column(String(20), nullable = False)
     email =     Column(String(20))
 
 
@@ -22,14 +23,17 @@ class Student(Base):
     """
     __tablename__ = 'student'
 
-    name =      Column(String(20))
+    student_id =    Column(Integer, primary_key = True)
+    name =      Column(String(20), nullable = False)
     email =     Column(String(20))
     rank =      Column(Integer, default = 0)
+    parent_id =    Column(Integer, ForeignKey('user.user_id'))
 
 
 #Connect to a PostGreSQL database with the following parameters:
 #   database:   mathquizerdb
 #   user:       mqdbuser
 #   password:   mqpassword
-engine = create_engine('postgresql://mqdbuser:mqpassword@localhost/mathquizerdb')
+#engine = create_engine('postgresql://mqdbuser:mqpassword@localhost/mathquizerdb')
+engine = create_engine('sqlite:///mathquizer.db')
 Base.metadata.create_all(engine) 
